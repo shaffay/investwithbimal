@@ -11,6 +11,17 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <style>
         body {
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
 
             overflow: hidden;
         }
@@ -46,8 +57,13 @@
             height: 100%;
             background: linear-gradient(90deg, #f59e0b, #ef4444);
             width: 0%;
-            transition: width 0.1s ease;
-        }
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="https://investwithbimal.com/assets/images/Pro.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center" data-index="0">
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="1">
         .stat-card {
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.1);
@@ -137,7 +153,7 @@
                         <i class="material-icons text-purple-300 mr-2 text-3xl">group_add</i>
                         <h3 class="text-xl font-bold">Investor Influx</h3>
                     </div>
-                    <p class="mb-4">Key emirates – Dubai, Abu Dhabi, and Ras Al Khaimah (RAK) – have become global investor magnets.</p>
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="2">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-indigo-800 p-4 rounded-lg text-center">
                             <p class="text-2xl font-bold">110k+</p>
@@ -207,7 +223,7 @@
                 <div class="stat-card p-6 rounded-xl" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center mb-4">
                         <i class="material-icons text-green-300 mr-2 text-3xl">shield</i>
-                        <h3 class="text-xl font-bold">Safe Haven</h3>
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="3">
                     </div>
                     <p>Currency pegged to USD, politically stable with world-class property rights enforcement.</p>
                     <div class="mt-4 p-3 bg-green-900 bg-opacity-30 rounded-lg">
@@ -303,7 +319,7 @@
                         <i class="material-icons text-green-300 mr-2 text-3xl">paid</i>
                         <h3 class="text-xl font-bold">Rental Yields</h3>
                     </div>
-                    <div class="space-y-4">
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="4">
                         <div class="flex justify-between items-center">
                             <span>Dubai</span>
                             <span class="font-bold text-green-300">~7%</span>
@@ -381,7 +397,7 @@
                             <span>The Oasis by Emaar</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="material-icons text-blue-300 mr-2 text-sm">star</i>
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="5">
                             <span>Damac Lagoons</span>
                         </li>
                     </ul>
@@ -459,7 +475,7 @@
                             <i class="material-icons text-amber-400 mr-2 text-sm">star</i>
                             <span>Yas Golf Collection</span>
                         </li>
-                        <li class="flex items-start">
+    <div class="slide flex-shrink-0 p-8 md:p-12" data-index="6">
                             <i class="material-icons text-amber-400 mr-2 text-sm">star</i>
                             <span>Jubail Island</span>
                         </li>
@@ -532,7 +548,7 @@
                         <li class="flex items-start">
                             <i class="material-icons text-blue-300 mr-2 text-sm">star</i>
                             <span>Fairmont Residences</span>
-                        </li>
+    <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center" data-index="7">
                         <li class="flex items-start">
                             <i class="material-icons text-blue-300 mr-2 text-sm">star</i>
                             <span>Danah Bay</span>
@@ -609,6 +625,18 @@
                     <div class="p-3 bg-blue-800 bg-opacity-50 rounded">
                         <i class="material-icons text-purple-300">bar_chart</i>
                         <p class="text-sm mt-1">Data-Driven</p>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = parseInt(entry.target.getAttribute('data-index'));
+                    if (!isNaN(index)) {
+                        currentSlide = index;
+                        updateUI();
+                    }
+                }
+            });
+        }, { threshold: 0.6 });
+        slides.forEach(slide => observer.observe(slide));
                     </div>
                     <div class="p-3 bg-blue-800 bg-opacity-50 rounded">
                         <i class="material-icons text-green-300">handshake</i>
