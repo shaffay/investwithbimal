@@ -626,20 +626,51 @@
         const progressBar = document.getElementById('progressBar');
         const slides = document.querySelectorAll('.slide');
         const navDots = document.querySelectorAll('.nav-dot');
+        let currentSlide = 0;
+        let scrolling = false;
+
+        function goToSlide(index) {
+            const clamped = Math.max(0, Math.min(slides.length - 1, index));
+            currentSlide = clamped;
+            window.scrollTo({ left: clamped * window.innerWidth, behavior: 'smooth' });
+        }
+
         function updateUI() {
             const maxScroll = document.body.scrollWidth - window.innerWidth;
             const progress = (window.scrollX / maxScroll) * 100;
             progressBar.style.width = progress + '%';
             const index = Math.round(window.scrollX / window.innerWidth);
+            currentSlide = index;
             navDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
         }
+
         window.addEventListener('scroll', updateUI);
+
         navDots.forEach(dot => {
             dot.addEventListener('click', () => {
                 const i = parseInt(dot.getAttribute('data-slide'));
-                window.scrollTo({left: i * window.innerWidth, behavior: 'smooth'});
+                goToSlide(i);
             });
         });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                goToSlide(currentSlide + 1);
+            }
+        });
+
+        document.addEventListener('wheel', e => {
+            if (scrolling) return;
+            scrolling = true;
+            if (e.deltaY > 0) {
+                goToSlide(currentSlide + 1);
+            } else if (e.deltaY < 0) {
+                goToSlide(currentSlide - 1);
+            }
+            setTimeout(() => { scrolling = false; }, 600);
+            e.preventDefault();
+        }, { passive: false });
+
         window.addEventListener('resize', updateUI);
         updateUI();
     </script>
