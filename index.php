@@ -1150,36 +1150,7 @@
     </div>
 
     </div>
-    <script>
-        (() => {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: false
-            });
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            'blue-900': '#0f172a',
-                            'indigo-900': '#1e1b4b'
-                        }
-                    }
-                }
-            };)
-
-            const progressBar = document.getElementById('progressBar');
-            const slidesContainer = document.getElementById('slidesContainer');
-            const slides = document.querySelectorAll('.slide');
-            slidesContainer.style.width = `${slides.length * 100}vw`;
-            const navDots = document.querySelectorAll('.nav-dot');
-            let currentSlide = 0;
-
-         </script>
-    </div>
-
-
-    </div>
+   
 
     <script>
         AOS.init({
