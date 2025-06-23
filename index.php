@@ -30,11 +30,18 @@ section {
   background: linear-gradient(135deg, #0072ff, #00c6ff);
 }
 .progress-bar {
+
   position: fixed;
   top: 1rem;
   left: 2rem;
   right: 2rem;
   z-index: 100;
+
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+  right: 2rem;
+
 }
 .progress-line {
   flex: 1;
