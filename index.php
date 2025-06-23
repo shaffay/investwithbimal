@@ -1175,7 +1175,7 @@
             const navDots = document.querySelectorAll('.nav-dot');
             let currentSlide = 0;
 
-
+         </script>
     </div>
 
 
