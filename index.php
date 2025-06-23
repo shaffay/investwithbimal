@@ -1166,7 +1166,7 @@
                         }
                     }
                 }
-            };
+            };)
 
             const progressBar = document.getElementById('progressBar');
             const slidesContainer = document.getElementById('slidesContainer');
