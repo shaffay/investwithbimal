@@ -1250,6 +1250,26 @@
         goToSlide(0);
         
 
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.querySelectorAll('.nav-dot');
+        function updateUI() {
+            const maxScroll = document.body.scrollWidth - window.innerWidth;
+            const progress = (window.scrollX / maxScroll) * 100;
+            progressBar.style.width = progress + '%';
+            const index = Math.round(window.scrollX / window.innerWidth);
+            navDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+        window.addEventListener('scroll', updateUI);
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const i = parseInt(dot.getAttribute('data-slide'));
+                window.scrollTo({left: i * window.innerWidth, behavior: 'smooth'});
+            });
+        });
+        window.addEventListener('resize', updateUI);
+        updateUI();
+
+
 
     </script>
 </body>
