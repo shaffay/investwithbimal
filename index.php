@@ -26,12 +26,15 @@
         }
 
 
+
             overflow: hidden;
         }
+
         .slides-container {
             display: flex;
             transition: transform 0.7s ease;
             width: 100%;
+
 
 
             overflow-x: hidden;
@@ -39,11 +42,13 @@
             scroll-behavior: smooth;
 
 
+
         }
         .slide {
             width: 100vw;
             height: 100vh;
             flex-shrink: 0;
+
 
 
             scroll-snap-align: start;
@@ -96,6 +101,8 @@
         }
     </style>
 </head>
+
+
 
 <body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans relative overflow-hidden">
     <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -592,6 +599,7 @@
     <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center" data-index="7">
 
 
+
 <body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans relative overflow-hidden">
 
 <body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans flex overflow-x-auto">
@@ -1086,6 +1094,7 @@
     <!-- Slide 8: Conclusion -->
     <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center">
 
+
         <div data-aos="zoom-in">
             <h1 class="text-3xl md:text-5xl font-bold mb-6 highlight-text">The UAE Wealth Blueprint</h1>
             <div class="stat-card p-6 rounded-xl mb-8 max-w-2xl" data-aos="fade-up">
@@ -1139,6 +1148,33 @@
             </div>
         </div>
     </div>
+
+    </div>
+    <script>
+        (() => {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: false
+            });
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'blue-900': '#0f172a',
+                            'indigo-900': '#1e1b4b'
+                        }
+                    }
+                }
+            };
+
+            const progressBar = document.getElementById('progressBar');
+            const slidesContainer = document.getElementById('slidesContainer');
+            const slides = document.querySelectorAll('.slide');
+            slidesContainer.style.width = `${slides.length * 100}vw`;
+            const navDots = document.querySelectorAll('.nav-dot');
+            let currentSlide = 0;
+
 
     </div>
 
@@ -1242,6 +1278,8 @@
         window.addEventListener('resize', () => goToSlide(currentSlide));
         goToSlide(0);
 
+        })();
+
 
         const slides = document.querySelectorAll('.slide');
         const navDots = document.querySelectorAll('.nav-dot');
@@ -1261,6 +1299,7 @@
         });
         window.addEventListener('resize', updateUI);
         updateUI();
+
 
     </script>
 </body>
