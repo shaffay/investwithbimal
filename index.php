@@ -11,17 +11,26 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <style>
         body {
+
             overflow: hidden;
         }
         .slides-container {
             display: flex;
             transition: transform 0.7s ease;
             width: 100%;
+
+            overflow-x: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+
         }
         .slide {
             width: 100vw;
             height: 100vh;
             flex-shrink: 0;
+
+            scroll-snap-align: start;
+
             overflow-y: auto;
         }
         .progress-container {
@@ -70,7 +79,11 @@
         }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans relative overflow-hidden">
+
+<body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans flex overflow-x-auto">
+
     <!-- Progress bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -86,7 +99,9 @@
         <div class="nav-dot rounded-full cursor-pointer" data-slide="6"></div>
         <div class="nav-dot rounded-full cursor-pointer" data-slide="7"></div>
     </div>
+
     <div id="slidesContainer" class="slides-container">
+
     <!-- Slide 1: Title Slide -->
     <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center">
         <div data-aos="zoom-in">
@@ -611,7 +626,9 @@
             </div>
         </div>
     </div>
+
     </div>
+
     <script>
         AOS.init({
             duration: 800,
@@ -629,6 +646,7 @@
             }
         }
         const progressBar = document.getElementById('progressBar');
+
         const slidesContainer = document.getElementById('slidesContainer');
         const slides = document.querySelectorAll('.slide');
         slidesContainer.style.width = `${slides.length * 100}vw`;
@@ -694,6 +712,26 @@
 
         window.addEventListener('resize', () => goToSlide(currentSlide));
         goToSlide(0);
+
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.querySelectorAll('.nav-dot');
+        function updateUI() {
+            const maxScroll = document.body.scrollWidth - window.innerWidth;
+            const progress = (window.scrollX / maxScroll) * 100;
+            progressBar.style.width = progress + '%';
+            const index = Math.round(window.scrollX / window.innerWidth);
+            navDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+        window.addEventListener('scroll', updateUI);
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const i = parseInt(dot.getAttribute('data-slide'));
+                window.scrollTo({left: i * window.innerWidth, behavior: 'smooth'});
+            });
+        });
+        window.addEventListener('resize', updateUI);
+        updateUI();
+
     </script>
 </body>
 </html>
