@@ -1249,6 +1249,7 @@
         window.addEventListener('resize', () => goToSlide(currentSlide));
         goToSlide(0);
         
+
         const slides = document.querySelectorAll('.slide');
         const navDots = document.querySelectorAll('.nav-dot');
         function updateUI() {
@@ -1267,6 +1268,7 @@
         });
         window.addEventListener('resize', updateUI);
         updateUI();
+
 
 
     </script>
