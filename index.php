@@ -11,14 +11,26 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <style>
         body {
+
+            overflow: hidden;
+        }
+        .slides-container {
+            display: flex;
+            transition: transform 0.7s ease;
+            width: 100%;
+
             overflow-x: hidden;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
+
         }
         .slide {
             width: 100vw;
             height: 100vh;
+            flex-shrink: 0;
+
             scroll-snap-align: start;
+
             overflow-y: auto;
         }
         .progress-container {
@@ -67,7 +79,11 @@
         }
     </style>
 </head>
+
+<body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans relative overflow-hidden">
+
 <body class="bg-gradient-to-br from-blue-900 to-indigo-900 text-white font-sans flex overflow-x-auto">
+
     <!-- Progress bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -83,6 +99,9 @@
         <div class="nav-dot rounded-full cursor-pointer" data-slide="6"></div>
         <div class="nav-dot rounded-full cursor-pointer" data-slide="7"></div>
     </div>
+
+    <div id="slidesContainer" class="slides-container">
+
     <!-- Slide 1: Title Slide -->
     <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center">
         <div data-aos="zoom-in">
@@ -607,6 +626,9 @@
             </div>
         </div>
     </div>
+
+    </div>
+
     <script>
         AOS.init({
             duration: 800,
@@ -624,6 +646,73 @@
             }
         }
         const progressBar = document.getElementById('progressBar');
+
+        const slidesContainer = document.getElementById('slidesContainer');
+        const slides = document.querySelectorAll('.slide');
+        slidesContainer.style.width = `${slides.length * 100}vw`;
+        const navDots = document.querySelectorAll('.nav-dot');
+        let currentSlide = 0;
+        let scrolling = false;
+
+        function goToSlide(index) {
+            const clamped = Math.max(0, Math.min(slides.length - 1, index));
+            currentSlide = clamped;
+            slidesContainer.style.transform = `translateX(-${clamped * 100}vw)`;
+            updateUI();
+        }
+
+        function updateUI() {
+            const progress = (currentSlide / (slides.length - 1)) * 100;
+            progressBar.style.width = progress + '%';
+            navDots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+        }
+
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const i = parseInt(dot.getAttribute('data-slide'));
+                goToSlide(i);
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                goToSlide(currentSlide + 1);
+            }
+        });
+
+        document.addEventListener('wheel', e => {
+            if (scrolling) return;
+            scrolling = true;
+            if (e.deltaY > 0) {
+                goToSlide(currentSlide + 1);
+            } else if (e.deltaY < 0) {
+                goToSlide(currentSlide - 1);
+            }
+            setTimeout(() => { scrolling = false; }, 600);
+            e.preventDefault();
+        }, { passive: false });
+
+        let touchStartY = null;
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', e => {
+            if (touchStartY === null) return;
+            const deltaY = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(deltaY) > 50) {
+                if (deltaY < 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+            touchStartY = null;
+        }, { passive: true });
+
+        window.addEventListener('resize', () => goToSlide(currentSlide));
+        goToSlide(0);
+
         const slides = document.querySelectorAll('.slide');
         const navDots = document.querySelectorAll('.nav-dot');
         function updateUI() {
@@ -642,6 +731,7 @@
         });
         window.addEventListener('resize', updateUI);
         updateUI();
+
     </script>
 </body>
 </html>
