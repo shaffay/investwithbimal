@@ -604,25 +604,27 @@
     <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden md:flex flex-col space-y-4">
         <div class="nav-dot rounded-full cursor-pointer active" data-slide="0"></div>
         <div class="nav-dot rounded-full cursor-pointer" data-slide="1"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="2"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="3"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="4"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="5"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="6"></div>
-        <div class="nav-dot rounded-full cursor-pointer" data-slide="7"></div>
-    </div>
+        (() => {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: false
+            });
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'blue-900': '#0f172a',
+                            'indigo-900': '#1e1b4b'
+                        }
+            };
 
-    <div id="slidesContainer" class="slides-container">
-
-    <!-- Slide 1: Title Slide -->
-    <div class="slide flex-shrink-0 p-8 md:p-12 flex flex-col items-center justify-center text-center">
-        <div data-aos="zoom-in">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 highlight-text">The UAE Real Estate Wealth Blueprint</h1>
-            <h2 class="text-2xl md:text-3xl font-semibold text-amber-300 mb-8">Why Dubai, Abu Dhabi &amp; Ras Al Khaimah Are Global Investor Magnets</h2>
-            <div class="flex justify-center mb-8">
-                <span class="w-32 h-1 bg-amber-400 rounded-full"></span>
-            </div>
-            <p class="text-xl mb-2">Presentation by <span class="font-bold">Bimal Lulla</span></p>
+            const progressBar = document.getElementById('progressBar');
+            const slidesContainer = document.getElementById('slidesContainer');
+            const slides = document.querySelectorAll('.slide');
+            slidesContainer.style.width = `${slides.length * 100}vw`;
+            const navDots = document.querySelectorAll('.nav-dot');
+            let currentSlide = 0;
             <p class="text-lg">CEO, Blue Collection Real Estate</p>
             <p class="text-gray-300 mt-4">Geneva, June 2025</p>
         </div>
@@ -697,6 +699,7 @@
                     <div class="flex items-center mb-4">
                         <i class="material-icons text-red-300 mr-2 text-3xl">savings</i>
                         <h3 class="text-xl font-bold">Tax-Free Income</h3>
+        })();
                     </div>
                     <p>No personal income tax on rental yields and no capital gains tax on property sales.</p>
                     <div class="mt-4 p-3 bg-red-900 bg-opacity-30 rounded-lg">
